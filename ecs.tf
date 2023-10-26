@@ -52,23 +52,23 @@ module "ecs" {
 
       # subnet_ids = module.vpc.private_subnets
       subnet_ids = module.vpc.private_subnets
-      # security_group_rules = {
-      #   ingress_from_alb = {
-      #     type                     = "ingress"
-      #     from_port                = 80
-      #     to_port                  = 80
-      #     protocol                 = "tcp"
-      #     description              = "Service port"
-      #     source_security_group_id = module.alb.security_group_id
-      #   }
-      #   egress_all = {
-      #     type        = "egress"
-      #     from_port   = 0
-      #     to_port     = 0
-      #     protocol    = "-1"
-      #     cidr_blocks = ["0.0.0.0/0"]
-      #   }
-      # }
+      security_group_rules = {
+        # ingress_from_alb = {
+        #   type                     = "ingress"
+        #   from_port                = 80
+        #   to_port                  = 80
+        #   protocol                 = "tcp"
+        #   description              = "Service port"
+        #   source_security_group_id = module.alb.security_group_id
+        # }
+        egress_all = {
+          type        = "egress"
+          from_port   = 0
+          to_port     = 0
+          protocol    = "-1"
+          cidr_blocks = ["0.0.0.0/0"]
+        }
+      }
     }
   }
 }
