@@ -25,6 +25,12 @@ module "ecs" {
           essential = true
           # image     = aws_ecr_repository.hello.repository_url
           image = aws_ecr_repository.nginx.repository_url
+          secrets : [
+            {
+              name : "TEST",
+              valueFrom : "arn:aws:secretsmanager:ap-northeast-1:195341589990:secret:test-AuLmKG:test::"
+            }
+          ],
           # image     = "nginx:latest"
           # port_mappings = [
           #   {
