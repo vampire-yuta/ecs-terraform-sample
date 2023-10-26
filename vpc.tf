@@ -46,3 +46,21 @@ resource "aws_security_group" "vpc_endpoint" {
     cidr_blocks = module.vpc.private_subnets_cidr_blocks
   }
 }
+
+resource "aws_vpc_endpoint" "ecr_dkr" {
+  vpc_id = module.vpc.vpc_id
+  service_name        = "com.amazonaws.ap-northeast-1.ecr.dkr"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = module.vpc.private_subnets
+  security_group_ids  = [aws_security_group.vpc_endpoint.id]
+  private_dns_enabled = true
+}
+
+resource "aws_vpc_endpoint" "ecr_api" {
+  vpc_id = module.vpc.vpc_id
+  service_name        = "com.amazonaws.ap-northeast-1.ecr.api"
+  vpc_endpoint_type   = "Interface"
+  subnet_ids          = module.vpc.private_subnets
+  security_group_ids  = [aws_security_group.vpc_endpoint.id]
+  private_dns_enabled = true
+}
