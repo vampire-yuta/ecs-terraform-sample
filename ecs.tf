@@ -24,7 +24,7 @@ module "ecs" {
           memory    = 1024
           essential = true
           # image     = aws_ecr_repository.hello.repository_url
-          image     = aws_ecr_repository.nginx.repository_url
+          image = aws_ecr_repository.nginx.repository_url
           # image     = "nginx:latest"
           # port_mappings = [
           #   {
