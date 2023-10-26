@@ -23,7 +23,9 @@ module "ecs" {
           cpu       = 512
           memory    = 1024
           essential = true
-          image     = "nginx:latest"
+          # image     = aws_ecr_repository.hello.repository_url
+          image     = aws_ecr_repository.nginx.repository_url
+          # image     = "nginx:latest"
           # port_mappings = [
           #   {
           #     name          = "app"
@@ -48,6 +50,7 @@ module "ecs" {
 
       assign_public_ip = false
 
+      # subnet_ids = module.vpc.private_subnets
       subnet_ids = module.vpc.private_subnets
       # security_group_rules = {
       #   ingress_from_alb = {
@@ -70,8 +73,17 @@ module "ecs" {
   }
 }
 
-resource "aws_ecr_repository" "ecr" {
-  name                 = local.project
+resource "aws_ecr_repository" "nginx" {
+  name                 = "${local.project}-nginx"
+  image_tag_mutability = "MUTABLE"
+
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+}
+
+resource "aws_ecr_repository" "hello" {
+  name                 = "${local.project}-hello"
   image_tag_mutability = "MUTABLE"
 
   image_scanning_configuration {
